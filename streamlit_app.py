@@ -54,7 +54,7 @@ df = pandas.json_normalize(data,
                        record_path='missedIngredients',
                        meta=['id', 'title'], 
                        meta_prefix='recipe_')
- streamlit.dataframe(df)
+streamlit.dataframe(df)
 
 if streamlit.button('Get Fruit Load List'):
    mycnx = snowflake.connector.connect (**streamlit.secrets[ "snowflake"])
