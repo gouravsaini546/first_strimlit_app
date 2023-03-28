@@ -46,6 +46,15 @@ def get_fruit_load_list():
   with mycnx.cursor() as my_cur:
     my_cur.execute("select * from fruit_load_list")
     return my_cur.fetchall()
+  
+data = [{"id":642582,"title":"Farfalle With Broccoli, Carrots and Tomatoes","image":"https://spoonacular.com/recipeImages/642582-312x231.jpg","imageType":"jpg","usedIngredientCount":2,"missedIngredientCount":6,"missedIngredients":[{"id":10120420,"amount":1.0,"unit":"pound","unitLong":"pound","unitShort":"lb","aisle":"Pasta and Rice","name":"farfalle pasta","original":"1 pound farfalle pasta","originalName":"farfalle pasta","meta":[],"image":"https://spoonacular.com/cdn/ingredients_100x100/farfalle.png"},{"id":4042,"amount":2.0,"unit":"tablespoons","unitLong":"tablespoons","unitShort":"Tbsp","aisle":"Oil, Vinegar, Salad Dressing","name":"peanut oil","original":"2 tablespoons peanut oil","originalName":"peanut oil","meta":[],"image":"https://spoonacular.com/cdn/ingredients_100x100/peanut-oil.jpg"},{"id":11090,"amount":2.0,"unit":"inches","unitLong":"inches","unitShort":"inches","aisle":"Produce","name":"broccoli heads","original":"2 inches large broccoli heads (that's what she said)","originalName":"broccoli heads (that's what she said)","meta":["(that's what she said)"],"image":"https://spoonacular.com/cdn/ingredients_100x100/broccoli.jpg"}]}]
+
+# normalize the JSON data into a pandas dataframe
+df = pandas.json_normalize(data, 
+                       record_path='missedIngredients',
+                       meta=['id', 'title'], 
+                       meta_prefix='recipe_')
+ streamlit.dataframe(df)
 
 if streamlit.button('Get Fruit Load List'):
    mycnx = snowflake.connector.connect (**streamlit.secrets[ "snowflake"])
