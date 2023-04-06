@@ -48,6 +48,8 @@ if page == 'Login':
     password = st.text_input('Password', type='password')
     if st.button('Login'):
         if authenticate_user_login(email, password):
-            st.success('Login successful
+            st.success('Login successful!')
+        else:
+            st.error('Incorrect email or password. Please try again.')
 
 
