@@ -2,6 +2,8 @@ import streamlit as st
 import snowflake.connector
 import hashlib
 
+st.title('Karigari - Evolving Food Industry')
+
 def connect_to_snowflake():
   conn = snowflake.connector.connect(**st.secrets[ "snowflake" ])
   return conn
