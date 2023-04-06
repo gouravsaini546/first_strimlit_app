@@ -3,7 +3,7 @@ import snowflake.connector
 import hashlib
 
 def connect_to_snowflake():
-  conn = snowflake.connector.connect(**streamlit.secrets[ "snowflake" ])
+  conn = snowflake.connector.connect(**st.secrets[ "snowflake" ])
   return conn
 def create_new_user_profile(name, email, fats, carbohydrates, protein):
   conn = connect_to_snowflake()
