@@ -5,10 +5,12 @@ import hashlib
 def connect_to_snowflake():
   conn = snowflake.connector.connect(**st.secrets[ "snowflake" ])
   return conn
-def create_new_user_profile(name, email, fats, carbohydrates, protein):
+def create_new_user_profile(name, email, password, fats, carbohydrates, protein):
+    # Hash the password using SHA-256 algorithm
+  password_hash = hashlib.sha256(password.encode()).hexdigest()
   conn = connect_to_snowflake()
   cursor = conn.cursor()
-  cursor.execute("INSERT INTO user_profiles (name, email, fats, carbohydrates, protein) VALUES (%s, %s, %s, %s, %s)", (name, email, fats, carbohydrates, protein))
+  cursor.execute("INSERT INTO user_profiles (name, email, password_hash, fats, carbohydrates, protein) VALUES (%s, %s, %s, %s, %s, %s)", (name, email, password_hash, fats, carbohydrates, protein))
   conn.commit()
   cursor.close()
   conn.close()
@@ -35,11 +37,12 @@ if page == 'Create Profile':
     st.header('Create Your Profile')
     name = st.text_input('Name')
     email = st.text_input('Email')
+    password = st.text_input('Password', type='password')
     fats = st.number_input('Fats', min_value=0, max_value=100)
     carbohydrates = st.number_input('Carbohydrates', min_value=0, max_value=100)
     protein = st.number_input('Protein', min_value=0, max_value=100)
     if st.button('Create Profile'):
-        create_new_user_profile(name, email, fats, carbohydrates, protein)
+        create_new_user_profile(name, email, password, fats, carbohydrates, protein)
         st.success('Profile created successfully!')
         
 if page == 'Login':
