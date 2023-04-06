@@ -12,13 +12,6 @@ def create_new_user_profile(name, email, fats, carbohydrates, protein):
   conn.commit()
   cursor.close()
   conn.close()
-def create_new_user_profile(name, email, fats, carbohydrates, protein):
-  conn = connect_to_snowflake()
-  cursor = conn.cursor()
-  cursor.execute("INSERT INTO user_profiles (name, email, fats, carbohydrates, protein) VALUES (%s, %s, %s, %s, %s)", (name, email, fats, carbohydrates, protein))
-  conn.commit()
-  cursor.close()
-  conn.close()
 
 def authenticate_user_login(email, password):
   conn = connect_to_snowflake()
