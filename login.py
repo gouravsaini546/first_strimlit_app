@@ -50,7 +50,7 @@ if page == 'Create Profile':
         
 if page == 'Login':
     st.header('Login')
-    st.image('https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/285/shield_1f6e1.png', width=100)
+    st.image('https://cdn-icons-png.flaticon.com/512/2592/2592317.png', width=100)
     email = st.text_input('Email')
     password = st.text_input('Password', type='password')
     if st.button('Login'):
