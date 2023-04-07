@@ -87,7 +87,7 @@ def get_food_item_info(food_calorie):
 def get_toppings(food_toppings):
     conn = connect_to_snowflake()
     cursor = conn.cursor()
-    cursor.execute("SELECT TITLE FROM toppings WHERE TYPE = %s", (food_toppings,))
+    cursor.execute("SELECT NAME FROM toppings WHERE TYPE = %s", (food_toppings,))
     result = cursor.fetchall()
     cursor.close()
     conn.close()
