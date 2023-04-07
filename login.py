@@ -1,6 +1,7 @@
 import streamlit as st
 import snowflake.connector
 import hashlib
+import pandas as pd
 
 st.set_page_config(page_title="Karigari", page_icon=":fork_and_knife:")
 
