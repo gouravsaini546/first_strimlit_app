@@ -89,13 +89,17 @@ elif page == 'Login':
 if st.session_state.get('logged_in'):
     st.title('Dashboard')
     st.write(f"Welcome {get_user_data(st.session_state.email)[0]}!")
-    st.write(f"Email: {get_user_data(st.session_state.email)[1]}")
-    st.write(f"Nutrients: {get_user_data(st.session_state.email)[3]}")
-    new_nutrients = st.text_input('Enter your updated nutrient levels')
-    if st.button('Update Nutrients'):
-        update_user_nutrients(st.session_state.email, new_nutrients)
-        st.success('Nutrients updated successfully!')
 
+    if st.button('View Profile Details'):
+        with st.expander('User Profile'):
+            name, email, age, weight, height, bmi, activity_level = get_user_data(st.session_state.email)
+            st.write(f"Name: {name}")
+            st.write(f"Email: {email}")
+            st.write(f"Age: {age}")
+            st.write(f"Weight: {weight}")
+            st.write(f"Height: {height}")
+            st.write(f"BMI: {bmi}")
+            st.write(f"Activity Level: {activity_level}")
     st.write('Favorites:')
     favorites = get_user_favorites(st.session_state.email)
     if favorites:
