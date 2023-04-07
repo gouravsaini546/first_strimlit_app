@@ -57,6 +57,37 @@ def add_user_favourite(email, recipe_name):
     conn.commit()
     cursor.close()
     conn.close()
+    
+def get_food_items_by_type(food_type):
+    conn = connect_to_snowflake()
+    cursor = conn.cursor()
+    cursor.execute("SELECT TITLE FROM FOOD_ITEMS WHERE TYPE = %s", (food_type,))
+    result = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return [row[0] for row in result]
+
+def get_food_item_info(food_title):
+    conn = connect_to_snowflake()
+    cursor = conn.cursor()
+    cursor.execute("SELECT CALORIES, PROTEIN, FAT, SODIUM FROM FOOD_ITEMS WHERE TITLE = %s", (food_title,))
+    result = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return result
+
+def create_custom_food_item(food_type, food_title, calories, protein, fat, sodium):
+    conn = connect_to_snowflake()
+    cursor = conn.cursor()
+    cursor.execute(
+        "INSERT INTO CUSTOM_FOOD_ITEMS (EMAIL, TYPE, TITLE, CALORIES, PROTEIN, FAT, SODIUM) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+        (st.session_state.email, food_type, food_title, calories, protein, fat, sodium),
+    )
+    conn.commit()
+    cursor.close()
+    conn.close()
+    
+
 
 st.sidebar.header('Navigation')
 page = st.sidebar.radio('Go to', ['Create Profile', 'Login', 'Dashboard'])
