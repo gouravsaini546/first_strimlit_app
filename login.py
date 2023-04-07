@@ -25,7 +25,7 @@ def authenticate_user_login(email, password):
 
 
 st.sidebar.header('Navigation')
-page = st.sidebar.radio('Go to', ['Create Profile', 'Login'])
+page = st.sidebar.radio('Go to', ['Create Profile', 'Login','User Dashboard'])
 
 def user_dashboard():
     st.header(f'Welcome, {st.session_state["name"]}!')
