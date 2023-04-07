@@ -92,6 +92,14 @@ def get_toppings(food_toppings):
     cursor.close()
     conn.close()
     return [row[0] for row in result]
+ def get_toppings_item_info(toppings_calorie):
+    conn = connect_to_snowflake()
+    cursor = conn.cursor()
+    cursor.execute("SELECT CALORIES, PROTEIN, FAT, SODIUM FROM toppings WHERE NAME = %s", (toppings_calorie,))
+    result = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return result
 
 def create_custom_food_item(food_type, food_title, calories, protein, fat, sodium):
     conn = connect_to_snowflake()
