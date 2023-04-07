@@ -35,7 +35,7 @@ def authenticate_user_login(email, password):
 def get_user_data(email):
     conn = connect_to_snowflake()
     cursor = conn.cursor()
-    cursor.execute("SELECT name, email, age, weight, height, activity_level FROM user_profiles WHERE email = %s", (email,))
+    cursor.execute("SELECT name, email, age, weight, height, activity_level, BMI FROM user_profiles WHERE email = %s", (email,))
     result = cursor.fetchone()
     cursor.close()
     conn.close()
@@ -90,21 +90,16 @@ if st.session_state.get('logged_in'):
     st.title('Dashboard')
     st.write(f"Welcome {get_user_data(st.session_state.email)[0]}!")
 
-    if show_profile:
-        st.write(f"Name: {user_data[0]}")
-        st.write(f"Email: {user_data[1]}")
-        st.write(f"Age: {user_data[2]}")
-        st.write(f"Weight: {user_data[3]}")
-        st.write(f"Height: {user_data[4]}")
-        st.write(f"BMI: {calculate_bmi(user_data[3], user_data[4])}")
-        st.write(f"Activity Level: {user_data[6]}")
-    else:
-        st.write("Click the button to view your profile")
-    st.write('Favorites:')
-    favorites = get_user_favorites(st.session_state.email)
-    if favorites:
-        for f in favorites:
-            st.write(f)
+    if st.button('View Profile Details'):
+        with st.expander('User Profile'):
+            name, email, age, weight, height, bmi, activity_level = get_user_data(st.session_state.email)
+            st.write(f"Name: {get_user_data(st.session_state.email)[0]}!")
+            st.write(f"Email: {get_user_data(st.session_state.email)[1]}!")
+            st.write(f"Age: {get_user_data(st.session_state.email)[2]}!")
+            st.write(f"Weight: {get_user_data(st.session_state.email)[3]}!")
+            st.write(f"Height: {get_user_data(st.session_state.email)[4]}!")
+            st.write(f"BMI: {get_user_data(st.session_state.email)[6]}!")
+            st.write(f"Activity Level: {get_user_data(st.session_state.email)[5]}!")
 
     st.write('Search recipes based on ingredients:')
     ingredients = st.text_input('Enter ingredients separated by commas')
