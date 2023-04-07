@@ -58,7 +58,6 @@ if page == 'Login':
         if success:
             st.success(f'Welcome back, {name}!')
             st.session_state['name'] = name
-            st.experimental_rerun()
         else:
             st.error('Incorrect email or password. Please try again.')
             
