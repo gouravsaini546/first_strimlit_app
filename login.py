@@ -31,8 +31,10 @@ def authenticate_user_login(email, password):
       return True
   return False
 
+
+
 st.sidebar.header('Navigation')
-page = st.sidebar.radio('Go to', ['Create Profile', 'Login'])
+page = st.sidebar.radio('Go to', ['Create Profile', 'Login', 'User Dashboard'])
 
 
 if page == 'Create Profile':
@@ -52,8 +54,21 @@ if page == 'Login':
     email = st.text_input('Email')
     password = st.text_input('Password', type='password')
     if st.button('Login'):
-        if authenticate_user_login(email, password):
-            st.success('Login successful!')
+        success, name = authenticate_user_login(email, password)
+        if success:
+            st.success(f'Welcome back, {name}!')
+            st.session_state['name'] = name
+            st.experimental_rerun()
         else:
             st.error('Incorrect email or password. Please try again.')
+            
+if page == 'User Dashboard':
+    st.header(f'Welcome, {st.session_state["name"]}!')
+    st.image('https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/298/green-apple_1f34f.png', width=100)
+    st.write('')
+    with st.container():
+        st.subheader('Nutrients Selected')
+        st.write(f'Fats: {fats}%')
+        st.write(f'Carbohydrates: {carbohydrates}%')
+        st.write(f'Protein: {protein}%')
 
