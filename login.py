@@ -93,13 +93,13 @@ if st.session_state.get('logged_in'):
     if st.button('View Profile Details'):
         with st.expander('User Profile'):
             name, email, age, weight, height, bmi, activity_level = get_user_data(st.session_state.email)
-            st.write(f"Name: {get_user_data(st.session_state.email)[0]}!")
-            st.write(f"Email: {get_user_data(st.session_state.email)[1]}!")
-            st.write(f"Age: {get_user_data(st.session_state.email)[2]}!")
-            st.write(f"Weight: {get_user_data(st.session_state.email)[3]}!")
-            st.write(f"Height: {get_user_data(st.session_state.email)[4]}!")
-            st.write(f"BMI: {get_user_data(st.session_state.email)[6]}!")
-            st.write(f"Activity Level: {get_user_data(st.session_state.email)[5]}!")
+            st.write(f"Name: {get_user_data(st.session_state.email)[0]}")
+            st.write(f"Email: {get_user_data(st.session_state.email)[1]}")
+            st.write(f"Age: {get_user_data(st.session_state.email)[2]}")
+            st.write(f"Weight: {get_user_data(st.session_state.email)[3]}")
+            st.write(f"Height: {get_user_data(st.session_state.email)[4]}")
+            st.write(f"BMI: {get_user_data(st.session_state.email)[6]}")
+            st.write(f"Activity Level: {get_user_data(st.session_state.email)[5]}")
 
     st.write('Search recipes based on ingredients:')
     ingredients = st.text_input('Enter ingredients separated by commas')
