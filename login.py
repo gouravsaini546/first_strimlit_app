@@ -57,14 +57,15 @@ def add_user_favourite(email, recipe_name):
     conn.commit()
     cursor.close()
     conn.close()
-def get_food_items_by_type(food_type):
+def get_food_items_by_type(food_type=None):
     conn = connect_to_snowflake()
     cursor = conn.cursor()
-    cursor.execute("SELECT DISTINCT TYPE FROM FOOD_ITEMS WHERE TYPE = %s AND TYPE IS NOT NULL ", (food_type,))
+    cursor.execute("SELECT DISTINCT TYPE FROM FOOD_ITEMS WHERE TYPE IS NOT NULL ")
     result = cursor.fetchall()
     cursor.close()
     conn.close()
     return [row[0] for row in result]
+  
 def get_food_items_by_type(food_title):
     conn = connect_to_snowflake()
     cursor = conn.cursor()
@@ -139,7 +140,7 @@ if st.session_state.get('logged_in'):
             st.write(f"BMI: {get_user_data(st.session_state.email)[6]}")
             st.write(f"Activity Level: {get_user_data(st.session_state.email)[5]}")
     st.header('🍰🍛 Build Your Own Receipe 🍕🍗')
-    with st.selectbox('Food Item',{get_food_items_by_type(food_type)})
+    selected_food_type = st.selectbox('Select a Food Type', get_food_items_by_type())
       
     
     st.write('Search recipes based on ingredients:')
