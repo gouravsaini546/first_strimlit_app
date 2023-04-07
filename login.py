@@ -84,7 +84,7 @@ if page == 'User Dashboard':
     st.subheader('Recipe Search Tool')
     # display a tool to search for recipes based on ingredients using the recipe API
 
-with st.beta_container():
+with st.container():
     st.subheader('Nutrients Selected')
     st.write(f'Fats: {fats}%')
     st.write(f'Carbohydrates: {carbohydrates}%')
