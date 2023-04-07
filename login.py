@@ -44,7 +44,7 @@ if page == 'Create Profile':
     height = st.number_input('Height(In CM)', min_value=0, max_value=500)
     activity_level = st.selectbox('Activity Level', options=['Sedentary',  'Moderately Active', 'Very Active'])
     if st.button('Create Profile'):
-        create_new_user_profile(name, email, password, height, weight, activity_level)
+        create_new_user_profile(name, email, password, weight, height, activity_level)
         st.success('Profile created successfully!')
         
 if page == 'Login':
