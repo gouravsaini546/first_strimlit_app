@@ -66,7 +66,7 @@ def get_food_items_by_type(food_type=None):
     conn.close()
     return [row[0] for row in result]
   
-def get_food_items_by_type(food_title):
+def get_food_items_by_title(food_title):
     conn = connect_to_snowflake()
     cursor = conn.cursor()
     cursor.execute("SELECT TITLE FROM FOOD_ITEMS WHERE TYPE = %s", (food_title,))
