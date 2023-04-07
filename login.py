@@ -7,12 +7,12 @@ st.title('Karigari')
 def connect_to_snowflake():
   conn = snowflake.connector.connect(**st.secrets[ "snowflake" ])
   return conn
-def create_new_user_profile(name, email, password, weight, height, activity_level):
+def create_new_user_profile(name, email, password, age, weight, height, activity_level):
     # Hash the password using SHA-256 algorithm
   password_hash = hashlib.sha256(password.encode()).hexdigest()
   conn = connect_to_snowflake()
   cursor = conn.cursor()
-  cursor.execute("INSERT INTO user_profiles (name, email, password_hash, weight, height, activity_level) VALUES (%s, %s, %s, %s, %s, %s)", (name, email, password_hash, weight, height, activity_level))
+  cursor.execute("INSERT INTO user_profiles (name, email, password_hash, age, weight, height, activity_level) VALUES (%s, %s, %s, %s, %s, %s)", (name, email, password_hash, age, weight, height, activity_level))
   conn.commit()
   cursor.close()
   conn.close()
@@ -40,11 +40,12 @@ if page == 'Create Profile':
     name = st.text_input('Name')
     email = st.text_input('Email')
     password = st.text_input('Password', type='password')
+    age = st.number_input('Age(In Years)', min_value=0, max_value=200)
     weight = st.number_input('Weight(In KG)', min_value=0, max_value=1000)
     height = st.number_input('Height(In CM)', min_value=0, max_value=500)
     activity_level = st.selectbox('Activity Level', options=['Sedentary',  'Moderately Active', 'Very Active'])
     if st.button('Create Profile'):
-        create_new_user_profile(name, email, password, weight, height, activity_level)
+        create_new_user_profile(name, email, password, age, weight, height, activity_level)
         st.success('Profile created successfully!')
         
 if page == 'Login':
