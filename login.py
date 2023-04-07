@@ -27,6 +27,22 @@ def authenticate_user_login(email, password):
 st.sidebar.header('Navigation')
 page = st.sidebar.radio('Go to', ['Create Profile', 'Login'])
 
+def user_dashboard():
+    st.header(f'Welcome, {st.session_state["name"]}!')
+    st.image('https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/298/green-apple_1f34f.png', width=100)
+    st.write('')
+    with st.beta_container():
+        st.subheader('Nutrients Selected')
+        st.write(f'Fats: {fats}%')
+        st.write(f'Carbohydrates: {carbohydrates}%')
+        st.write(f'Protein: {protein}%')
+    cols = st.beta_columns(2)
+    with cols[0]:
+        st.subheader('Favorites')
+        # display the user's favorite recipes
+    with cols[1]:
+        st.write('')
+    st.subheader('Search Recipes')
 
 if page == 'Create Profile':
     st.header('Create Your Profile')
