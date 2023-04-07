@@ -84,6 +84,14 @@ def get_food_item_info(food_calorie):
     cursor.close()
     conn.close()
     return result
+def get_toppings(food_toppings):
+    conn = connect_to_snowflake()
+    cursor = conn.cursor()
+    cursor.execute("SELECT TITLE FROM toppings WHERE TYPE = %s", (food_toppings,))
+    result = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return [row[0] for row in result]
 
 def create_custom_food_item(food_type, food_title, calories, protein, fat, sodium):
     conn = connect_to_snowflake()
@@ -143,6 +151,8 @@ if st.session_state.get('logged_in'):
     st.header('🍰🍛 Build Your Own Receipe 🍕🍗')
     selected_food_type = st.selectbox('Select a Food Type', get_food_items_by_type())
     selected_food_item = st.selectbox('Select a Food variant', get_food_items_by_title(selected_food_type))
+    if len(get_toppings(selected_food_type)) > 0:
+      selected_toppings = st.multiselect("Pick some toppings:", get_toppings(selected_food_type))
     if selected_food_item:
         food_details = get_food_item_info(selected_food_item)
         df = pd.DataFrame({'Nutrient': ['Calories', 'Protein', 'Fat', 'Sodium'],
@@ -150,13 +160,3 @@ if st.session_state.get('logged_in'):
         st.table(df)
       
     
-    st.write('Search recipes based on ingredients:')
-    ingredients = st.text_input('Enter ingredients separated by commas')
-    if st.button('Search'):
-        recipes = search_recipes(ingredients)
-        for r in recipes:
-            st.write(r['title'])
-            st.write(f"Ready in {r['readyInMinutes']} minutes")
-            st.write(f"Serves {r['servings']} people")
-            st.write(f"Link: {r['sourceUrl']}")
-            st.image(r['image'])
