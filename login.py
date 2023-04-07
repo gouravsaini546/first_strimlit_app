@@ -18,18 +18,19 @@ def create_new_user_profile(name, email, password, fats, carbohydrates, protein)
   conn.close()
 
 def authenticate_user_login(email, password):
-  conn = connect_to_snowflake()
-  cursor = conn.cursor()
-  cursor.execute("SELECT password_hash FROM user_profiles WHERE email = %s", (email,))
-  result = cursor.fetchone()
-  cursor.close()
-  conn.close()
-  if result is not None:
-    stored_hash = result[0]
-    input_hash = hashlib.sha256(password.encode()).hexdigest()
-    if stored_hash == input_hash:
-      return True
-  return False
+    conn = connect_to_snowflake()
+    cursor = conn.cursor()
+    cursor.execute("SELECT name, password_hash FROM user_profiles WHERE email=%s", (email,))
+    result = cursor.fetchone()
+    if result is None:
+        return False, None
+    name, password_hash = result
+    entered_password_hash = hashlib.sha256(password.encode()).hexdigest()
+    if password_hash == entered_password_hash:
+        return True, name
+    else:
+        return False, None
+
 
 st.sidebar.header('Navigation')
 page = st.sidebar.radio('Go to', ['Create Profile', 'Login'])
@@ -52,9 +53,26 @@ if page == 'Login':
     email = st.text_input('Email')
     password = st.text_input('Password', type='password')
     if st.button('Login'):
-        if authenticate_user_login(email, password):
+        success, name = authenticate_user_login(email, password)
+        if success:
             st.success('Login successful!')
+            st.session_state['name'] = name
+            st.experimental_rerun()
         else:
             st.error('Incorrect email or password. Please try again.')
+            
+if page == 'User Dashboard':
+    st.header(f'Welcome, {st.session_state["name"]}!')
+    st.subheader('Nutrients Selected')
+    st.write(f'Fats: {fats}%')
+    st.write(f'Carbohydrates: {carbohydrates}%')
+    st.write(f'Protein: {protein}%')
+    
+    st.subheader('Favorites')
+    # display the user's favorite recipes
+    
+    st.subheader('Recipe Search Tool')
+    # display a tool to search for recipes based on ingredients using the recipe API
+
 
 
