@@ -99,3 +99,15 @@ with cols[0]:
 with cols[1]:
    # st.image('https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/twitter/282/heart-with-arrow_1f498.png', width=100)
     st.write('')
+def connect_to_snowflake():
+  conn = snowflake.connector.connect(**st.secrets[ "snowflake" ])
+  return conn
+def create_new_user_profile(name, email, password, fats, carbohydrates, protein):
+    # Hash the password using SHA-256 algorithm
+  password_hash = hashlib.sha256(password.encode()).hexdigest()
+  conn = connect_to_snowflake()
+  cursor = conn.cursor()
+  cursor.execute("INSERT INTO user_profiles (name, email, password_hash, fats, carbohydrates, protein) VALUES (%s, %s, %s, %s, %s, %s)", (name, email, password_hash, fats, carbohydrates, protein))
+  conn.commit()
+  cursor.close()
+  conn.close()
