@@ -97,7 +97,7 @@ def create_custom_food_item(food_type, food_title, calories, protein, fat, sodiu
     conn.close()
     
 
-st.title('Karigari 🍣 :knife_fork_plate: 🍔')
+st.title('🍣Karigari🍔')
 st.sidebar.header('Navigation')
 page = st.sidebar.radio('Go to', ['Create Profile', 'Login', 'Dashboard'])
 
