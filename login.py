@@ -78,5 +78,22 @@ if page == 'User Dashboard':
     st.subheader('Recipe Search Tool')
     # display a tool to search for recipes based on ingredients using the recipe API
 
+with st.beta_container():
+    st.subheader('Nutrients Selected')
+    st.write(f'Fats: {fats}%')
+    st.write(f'Carbohydrates: {carbohydrates}%')
+    st.write(f'Protein: {protein}%')
+    st.image('https://w7.pngwing.com/pngs/493/176/png-transparent-apple-green-apple-food-image-file-formats-leaf-thumbnail.png', width=100)
+    st.write('')
+    
+ cols = st.beta_columns(2)
+with cols[0]:
+    st.subheader('Favorites')
+    # display the user's favorite recipes
+with cols[1]:
+   # st.image('https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/twitter/282/heart-with-arrow_1f498.png', width=100)
+    st.write('')
+
+
 
 
