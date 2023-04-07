@@ -86,7 +86,7 @@ with st.beta_container():
     st.image('https://w7.pngwing.com/pngs/493/176/png-transparent-apple-green-apple-food-image-file-formats-leaf-thumbnail.png', width=100)
     st.write('')
     
- cols = st.beta_columns(2)
+cols = st.beta_columns(2)
 with cols[0]:
     st.subheader('Favorites')
     # display the user's favorite recipes
