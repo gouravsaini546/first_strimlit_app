@@ -2,17 +2,17 @@ import streamlit as st
 import snowflake.connector
 import hashlib
 
-st.title('Karigari - Evolving Food Industry')
+st.title('Karigari')
 
 def connect_to_snowflake():
   conn = snowflake.connector.connect(**st.secrets[ "snowflake" ])
   return conn
-def create_new_user_profile(name, email, password, fats, carbohydrates, protein):
+def create_new_user_profile(name, email, password, weight, height, activity_level):
     # Hash the password using SHA-256 algorithm
   password_hash = hashlib.sha256(password.encode()).hexdigest()
   conn = connect_to_snowflake()
   cursor = conn.cursor()
-  cursor.execute("INSERT INTO user_profiles (name, email, password_hash, fats, carbohydrates, protein) VALUES (%s, %s, %s, %s, %s, %s)", (name, email, password_hash, fats, carbohydrates, protein))
+  cursor.execute("INSERT INTO user_profiles (name, email, password_hash, weight, height, activity_level) VALUES (%s, %s, %s, %s, %s, %s)", (name, email, password_hash, weight, height, activity_level))
   conn.commit()
   cursor.close()
   conn.close()
@@ -31,10 +31,8 @@ def authenticate_user_login(email, password):
       return True
   return False
 
-
-
 st.sidebar.header('Navigation')
-page = st.sidebar.radio('Go to', ['Create Profile', 'Login', 'User Dashboard'])
+page = st.sidebar.radio('Go to', ['Create Profile', 'Login'])
 
 
 if page == 'Create Profile':
@@ -42,11 +40,11 @@ if page == 'Create Profile':
     name = st.text_input('Name')
     email = st.text_input('Email')
     password = st.text_input('Password', type='password')
-    fats = st.number_input('Fats', min_value=0, max_value=100)
-    carbohydrates = st.number_input('Carbohydrates', min_value=0, max_value=100)
-    protein = st.number_input('Protein', min_value=0, max_value=100)
+    weight = st.number_input('Weight(In KG)', min_value=0, max_value=1000)
+    height = st.number_input('Height(In CM)', min_value=0, max_value=500)
+    activity_level = st.selectbox('Activity Level', options=['Sedentary',  'Moderately Active', 'Very Active'])
     if st.button('Create Profile'):
-        create_new_user_profile(name, email, password, fats, carbohydrates, protein)
+        create_new_user_profile(name, email, password, height, weight, activity_level)
         st.success('Profile created successfully!')
         
 if page == 'Login':
@@ -54,20 +52,8 @@ if page == 'Login':
     email = st.text_input('Email')
     password = st.text_input('Password', type='password')
     if st.button('Login'):
-        success, name = authenticate_user_login(email, password)
-        if success:
-            st.success(f'Welcome back, {name}!')
-            st.session_state['name'] = name
+        if authenticate_user_login(email, password):
+            st.success('Login successful!')
         else:
             st.error('Incorrect email or password. Please try again.')
-            
-if page == 'User Dashboard':
-    st.header(f'Welcome, {st.session_state["name"]}!')
-    st.image('https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/298/green-apple_1f34f.png', width=100)
-    st.write('')
-    with st.container():
-        st.subheader('Nutrients Selected')
-        st.write(f'Fats: {fats}%')
-        st.write(f'Carbohydrates: {carbohydrates}%')
-        st.write(f'Protein: {protein}%')
 
