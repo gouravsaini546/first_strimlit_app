@@ -131,7 +131,8 @@ if st.session_state.get('logged_in'):
             st.write(f"Height: {get_user_data(st.session_state.email)[4]}")
             st.write(f"BMI: {get_user_data(st.session_state.email)[6]}")
             st.write(f"Activity Level: {get_user_data(st.session_state.email)[5]}")
-
+    st.header('🍰🍛 Build Your Own Receipee 🍕🍗')
+    
     st.write('Search recipes based on ingredients:')
     ingredients = st.text_input('Enter ingredients separated by commas')
     if st.button('Search'):
