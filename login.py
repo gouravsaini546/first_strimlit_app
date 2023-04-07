@@ -90,16 +90,16 @@ if st.session_state.get('logged_in'):
     st.title('Dashboard')
     st.write(f"Welcome {get_user_data(st.session_state.email)[0]}!")
 
-    if st.button('View Profile Details'):
-        with st.expander('User Profile'):
-            name, email, age, weight, height, bmi, activity_level = get_user_data(st.session_state.email)
-            st.write(f"Name: {name}")
-            st.write(f"Email: {email}")
-            st.write(f"Age: {age}")
-            st.write(f"Weight: {weight}")
-            st.write(f"Height: {height}")
-            st.write(f"BMI: {bmi}")
-            st.write(f"Activity Level: {activity_level}")
+    if show_profile:
+        st.write(f"Name: {user_data[0]}")
+        st.write(f"Email: {user_data[1]}")
+        st.write(f"Age: {user_data[2]}")
+        st.write(f"Weight: {user_data[3]}")
+        st.write(f"Height: {user_data[4]}")
+        st.write(f"BMI: {calculate_bmi(user_data[3], user_data[4])}")
+        st.write(f"Activity Level: {user_data[6]}")
+    else:
+        st.write("Click the button to view your profile")
     st.write('Favorites:')
     favorites = get_user_favorites(st.session_state.email)
     if favorites:
