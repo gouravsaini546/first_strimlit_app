@@ -142,6 +142,11 @@ if st.session_state.get('logged_in'):
     st.header('🍰🍛 Build Your Own Receipe 🍕🍗')
     selected_food_type = st.selectbox('Select a Food Type', get_food_items_by_type())
     selected_food_item = st.selectbox('Select a Food variant', get_food_items_by_title(selected_food_type))
+    if selected_food_item:
+        food_details = get_food_item_info(selected_food_item)
+        df = pd.DataFrame({'Nutrient': ['Calories', 'Protein', 'Fat', 'Sodium'],
+                           'Amount': food_details})
+        st.table(df)
       
     
     st.write('Search recipes based on ingredients:')
