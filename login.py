@@ -86,6 +86,25 @@ if st.session_state.get('logged_in'):
     st.title('Dashboard')
     st.write(f"Welcome {get_user_data(st.session_state.email)[0]}!")
     st.write(f"Email: {get_user_data(st.session_state.email)[1]}")
-    st.write(f"Age: {get_user_data(st.session_state.email)[2]}")
-    st.write(f"Weight: {get_user_data(st.session_state.email)[3]}")
-    st.write(f"Height: {get_user_data(st.session_state
+    st.write(f"Nutrients: {get_user_data(st.session_state.email)[3]}")
+    new_nutrients = st.text_input('Enter your updated nutrient levels')
+    if st.button('Update Nutrients'):
+        update_user_nutrients(st.session_state.email, new_nutrients)
+        st.success('Nutrients updated successfully!')
+
+    st.write('Favorites:')
+    favorites = get_user_favorites(st.session_state.email)
+    if favorites:
+        for f in favorites:
+            st.write(f)
+
+    st.write('Search recipes based on ingredients:')
+    ingredients = st.text_input('Enter ingredients separated by commas')
+    if st.button('Search'):
+        recipes = search_recipes(ingredients)
+        for r in recipes:
+            st.write(r['title'])
+            st.write(f"Ready in {r['readyInMinutes']} minutes")
+            st.write(f"Serves {r['servings']} people")
+            st.write(f"Link: {r['sourceUrl']}")
+            st.image(r['image'])
