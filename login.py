@@ -141,6 +141,7 @@ if st.session_state.get('logged_in'):
             st.write(f"Activity Level: {get_user_data(st.session_state.email)[5]}")
     st.header('🍰🍛 Build Your Own Receipe 🍕🍗')
     selected_food_type = st.selectbox('Select a Food Type', get_food_items_by_type())
+    selected_food_item = st.selectbox('Select a Food variant', get_food_items_by_title(selected_food_type))
       
     
     st.write('Search recipes based on ingredients:')
