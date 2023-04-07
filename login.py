@@ -2,7 +2,9 @@ import streamlit as st
 import snowflake.connector
 import hashlib
 
-st.title('Karigari - Evolving Food Industry')
+st.set_page_config(page_title='Karigari - Evolving Food Industry', page_icon=':apple:', layout='wide', initial_sidebar_state='auto')
+st.markdown('<style>body{background-color: #e6f7ff;}</style>', unsafe_allow_html=True)
+
 
 def connect_to_snowflake():
   conn = snowflake.connector.connect(**st.secrets[ "snowflake" ])
