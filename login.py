@@ -104,10 +104,7 @@ def get_toppings_item_info(toppings_calorie):
 def create_favourite(food_type, food_title,topping, calories, protein, fat, sodium):
     conn = connect_to_snowflake()
     cursor = conn.cursor()
-    cursor.execute(
-        "INSERT INTO favourite (EMAIL, TYPE, TITLE,topping, CALORIES, PROTEIN, FAT, SODIUM) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-        (st.session_state.email, food_type, food_title,topping, calories, protein, fat, sodium),
-    )
+    cursor.execute("INSERT INTO favourite (EMAIL, TYPE, TITLE,TOPPING, CALORIES, PROTEIN, FAT, SODIUM) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",(st.session_state.email, food_type, food_title,topping, calories, protein, fat, sodium))
     conn.commit()
     cursor.close()
     conn.close()
