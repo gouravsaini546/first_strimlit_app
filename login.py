@@ -79,7 +79,7 @@ def get_food_items_by_title(food_title):
 def get_food_item_info(food_calorie):
     conn = connect_to_snowflake()
     cursor = conn.cursor()
-    cursor.execute("SELECT CALORIES, PROTEIN, FAT, SODIUM FROM FOOD_ITEMS WHERE TITLE = %s", (food_calorie,))
+    cursor.execute("SELECT to_number(CALORIES) AS CALORIES, to_number(PROTEIN) AS PROTEIN, to_number(FAT) AS FAT, to_number(SODIUM) AS SODIUM  FROM FOOD_ITEMS WHERE TITLE = %s", (food_calorie,))
     result = cursor.fetchone()
     cursor.close()
     conn.close()
@@ -95,7 +95,7 @@ def get_toppings(food_toppings):
 def get_toppings_item_info(toppings_calorie):
     conn = connect_to_snowflake()
     cursor = conn.cursor()
-    cursor.execute("SELECT SUM(CALORIE) AS CALORIES, SUM(PROTEIN) AS PROTEIN, SUM(FAT) AS FAT, SUM(SODIUM) AS SODIUM FROM toppings WHERE NAME IN (%s)", (toppings_calorie,))
+    cursor.execute("SELECT SUM(to_number(CALORIE)) AS CALORIES, to_number(SUM(PROTEIN)) AS PROTEIN, to_number(SUM(FAT)) AS FAT, to_number(SUM(SODIUM)) AS SODIUM FROM toppings WHERE NAME IN (%s)", (toppings_calorie,))
     result = cursor.fetchone()
     cursor.close()
     conn.close()
