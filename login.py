@@ -92,7 +92,7 @@ def get_toppings(food_toppings):
     cursor.close()
     conn.close()
     return [row[0] for row in result]
- def get_toppings_item_info(toppings_calorie):
+def get_toppings_item_info(toppings_calorie):
     conn = connect_to_snowflake()
     cursor = conn.cursor()
     cursor.execute("SELECT CALORIES, PROTEIN, FAT, SODIUM FROM toppings WHERE NAME = %s", (toppings_calorie,))
@@ -166,5 +166,9 @@ if st.session_state.get('logged_in'):
         df = pd.DataFrame({'Nutrient': ['Calories', 'Protein', 'Fat', 'Sodium'],
                            'Amount': food_details})
         st.table(df)
+    if selected_toppings:
+        toppings_details = get_toppings_item_info(selected_toppings)
+        df2 = pd.DataFrame({{'Nutrient': ['Calories', 'Protein', 'Fat', 'Sodium'],
+                           'Amount': toppings_details})
       
     
