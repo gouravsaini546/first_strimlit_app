@@ -52,7 +52,7 @@ def get_user_data(email):
 def get_user_favourites(email):
     conn = connect_to_snowflake()
     cursor = conn.cursor()
-    cursor.execute("SELECT recipe_name FROM user_favourites WHERE email = %s", (email,))
+    cursor.execute("SELECT type, title, topping, calories, protein, fat, sodium FROM favourites WHERE email = %s limit 3", (email,))
     results = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -155,6 +155,16 @@ if st.session_state.get('logged_in'):
             st.write(f"Height: {get_user_data(st.session_state.email)[5]}")
             st.write(f"BMI: {get_user_data(st.session_state.email)[7]}")
             st.write(f"Activity Level: {get_user_data(st.session_state.email)[6]}")
+    rows = get_user_favourites(st.session_state.email)[0])
+    df3 = pd.DataFrame(rows, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
+    # Hide nutritional information by default
+    df3 = df3[["Type", "Title", "Topping"]]
+    st.write(df3)
+    if st.button("Show Nutritional Information"):
+        df = pd.DataFrame(rows, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
+        st.write(df)
+    
+    
     st.header('🍰🍛 Build Your Own Receipe 🍕🍗')
     selected_food_type = st.selectbox('Select a Food Type', get_food_items_by_type())
     selected_food_item = st.selectbox('Select a Food variant', get_food_items_by_title(selected_food_type))
