@@ -193,7 +193,10 @@ if st.session_state.get('logged_in'):
     st.table(total_food_df)
     
     if st.button("Save as Favorites"):
-      favorites = (get_user_data(st.session_state.email)[1],selected_food_type,selected_food_item,selected_toppings,calories_value,Protein_value,Fat_value,Sodium_value)
+      if selected_toppings:
+        favorites = (get_user_data(st.session_state.email)[1],selected_food_type,selected_food_item,selected_toppings,calories_value,Protein_value,Fat_value,Sodium_value)
+      else:
+        favorites = (get_user_data(st.session_state.email)[1],selected_food_type,selected_food_item,'N/A',calories_value,Protein_value,Fat_value,Sodium_value)
 
     
 
