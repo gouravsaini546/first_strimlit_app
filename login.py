@@ -186,7 +186,7 @@ if st.session_state.get('logged_in'):
     total_food_df = pd.DataFrame({'Nutrient': ['Calories', 'Protein', 'Fat', 'Sodium'],
                                 'Amount': total_df['Amount']})
     # Display the total nutrient amounts in a table
-    st.table(total_df['Amount'])
+    st.table(total_df['Amount'].values(0))
     st.table(total_food_df)
     
     #if st.button("Save as Favorites"):
