@@ -182,9 +182,11 @@ if st.session_state.get('logged_in'):
 
     # Sum the nutrient amounts from both dataframes
     total_df = toppings_df.add(food_df, fill_value=0)
-
+    total_food_df = pd.DataFrame({'Nutrient': ['Calories', 'Protein', 'Fat', 'Sodium'],
+                                'Amount': total_df['Amount']})
     # Display the total nutrient amounts in a table
-    st.table(total_df['Amount'])
+    #st.table(total_df['Amount'])
+    st.table(total_food_df)
 
     
 
