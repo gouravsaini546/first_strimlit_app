@@ -155,7 +155,7 @@ if st.session_state.get('logged_in'):
             st.write(f"Height: {get_user_data(st.session_state.email)[5]}")
             st.write(f"BMI: {get_user_data(st.session_state.email)[7]}")
             st.write(f"Activity Level: {get_user_data(st.session_state.email)[6]}")
-    rows = get_user_favourites(st.session_state.email)[0])
+    rows = get_user_favourites(get_user_data(st.session_state.email)[1])
     df3 = pd.DataFrame(rows, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
     # Hide nutritional information by default
     df3 = df3[["Type", "Title", "Topping"]]
