@@ -161,14 +161,16 @@ if st.session_state.get('logged_in'):
     selected_food_item = st.selectbox('Select a Food variant', get_food_items_by_title(selected_food_type))
     if len(get_toppings(selected_food_type)) > 0:
         selected_toppings = st.multiselect("Pick some toppings:", get_toppings(selected_food_type))
+        if selected_toppings:
+          toppings_details = get_toppings_item_info(selected_toppings)
+          df2 = pd.DataFrame({'Nutrient': ['Calories', 'Protein', 'Fat', 'Sodium'],
+                           'Amount': toppings_details})
     if selected_food_item:
         food_details = get_food_item_info(selected_food_item)
         df = pd.DataFrame({'Nutrient': ['Calories', 'Protein', 'Fat', 'Sodium'],
                            'Amount': food_details})
         st.table(df)
-    if selected_toppings:
-        toppings_details = get_toppings_item_info(selected_toppings)
-        df2 = pd.DataFrame({'Nutrient': ['Calories', 'Protein', 'Fat', 'Sodium'],
-                           'Amount': toppings_details})
+    
+
       
     
