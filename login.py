@@ -165,7 +165,7 @@ if st.session_state.get('logged_in'):
             toppings_details = get_toppings_item_info(selected_toppings)
             toppings_df = pd.DataFrame({'Nutrient': ['Calories', 'Protein', 'Fat', 'Sodium'],
                                         'Amount': toppings_details})
-            selected_toppings =("'"+selected_toppings+"'")
+            selected_toppings = ';'.join(selected_toppings)
             
         else:
             toppings_df = pd.DataFrame({'Nutrient': ['Calories', 'Protein', 'Fat', 'Sodium'],
