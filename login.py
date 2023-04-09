@@ -95,7 +95,7 @@ def get_toppings(food_toppings):
 def get_toppings_item_info(toppings_calorie):
     conn = connect_to_snowflake()
     cursor = conn.cursor()
-    cursor.execute("SELECT CALORIE AS CALORIES, PROTEIN, FAT, SODIUM FROM toppings WHERE NAME = %s", (toppings_calorie,))
+    cursor.execute("SELECT CALORIE AS CALORIES, PROTEIN, FAT, SODIUM FROM toppings WHERE NAME IN (%s)", (toppings_calorie,))
     result = cursor.fetchone()
     cursor.close()
     conn.close()
