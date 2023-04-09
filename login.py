@@ -184,7 +184,7 @@ if st.session_state.get('logged_in'):
     total_df = toppings_df.add(food_df, fill_value=0)
 
     # Display the total nutrient amounts in a table
-    st.table(total_df)
+    st.table(total_df(1))
 
     
 
