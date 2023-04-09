@@ -18,7 +18,7 @@ def create_new_user_profile(name, email, password,gender, age, weight, height, a
   conn.commit()
   cursor.close()
   conn.close()
-def create_favourite(food_type, food_title,topping, calories, protein, fat, sodium):
+def create_favourite(email,food_type, food_title,topping, calories, protein, fat, sodium):
   conn = connect_to_snowflake()
   cursor = conn.cursor()
   cursor.execute("INSERT INTO favourite (email, type, title,topping, calories, protein, fat, sodium) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",(email,selected_food_type,selected_food_item,selected_toppings,calories_value,Protein_value,Fat_value,Sodium_value))
