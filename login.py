@@ -18,6 +18,13 @@ def create_new_user_profile(name, email, password,gender, age, weight, height, a
   conn.commit()
   cursor.close()
   conn.close()
+def create_favourite(food_type, food_title,topping, calories, protein, fat, sodium):
+  conn = connect_to_snowflake()
+  cursor = conn.cursor()
+  cursor.execute("INSERT INTO favourite (email, type, title,topping, calories, protein, fat, sodium) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",(st.session_state.email, food_type, food_title,topping, calories, protein, fat, sodium))
+  conn.commit()
+  cursor.close()
+  conn.close()
 
 def authenticate_user_login(email, password):
   conn = connect_to_snowflake()
@@ -101,13 +108,7 @@ def get_toppings_item_info(toppings_calorie):
     conn.close()
     return result
 
-def create_favourite(food_type, food_title,topping, calories, protein, fat, sodium):
-    conn = connect_to_snowflake()
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO favourite (EMAIL, TYPE, TITLE,TOPPING, CALORIES, PROTEIN, FAT, SODIUM) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",(st.session_state.email, food_type, food_title,topping, calories, protein, fat, sodium))
-    conn.commit()
-    cursor.close()
-    conn.close()
+
     
 
 st.title('Karigari👨‍🍳')
