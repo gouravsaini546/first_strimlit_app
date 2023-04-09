@@ -156,7 +156,7 @@ if st.session_state.get('logged_in'):
             st.write(f"BMI: {get_user_data(st.session_state.email)[7]}")
             st.write(f"Activity Level: {get_user_data(st.session_state.email)[6]}")
     rows = get_user_favourites(get_user_data(st.session_state.email)[1])
-    print(rows.shape)
+    print(rows)
 
     #df3 = pd.DataFrame(rows, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
     # Hide nutritional information by default
