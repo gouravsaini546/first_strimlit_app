@@ -166,9 +166,5 @@ if st.session_state.get('logged_in'):
         df = pd.DataFrame({'Nutrient': ['Calories', 'Protein', 'Fat', 'Sodium'],
                            'Amount': food_details})
         st.table(df)
-    if selected_toppings:
-        toppings_details = get_toppings_item_info(selected_toppings)
-        df2 = pd.DataFrame({{'Nutrient': ['Calories', 'Protein', 'Fat', 'Sodium'],
-                           'Amount': toppings_details})
       
     
