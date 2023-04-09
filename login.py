@@ -101,11 +101,11 @@ def get_toppings_item_info(toppings_calorie):
     conn.close()
     return result
 
-def create_custom_food_item(food_type, food_title, calories, protein, fat, sodium):
+def favourite(food_type, food_title, calories, protein, fat, sodium):
     conn = connect_to_snowflake()
     cursor = conn.cursor()
     cursor.execute(
-        "INSERT INTO CUSTOM_FOOD_ITEMS (EMAIL, TYPE, TITLE,topping, CALORIES, PROTEIN, FAT, SODIUM) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+        "INSERT INTO favourite (EMAIL, TYPE, TITLE,topping, CALORIES, PROTEIN, FAT, SODIUM) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
         (st.session_state.email, food_type, food_title,topping, calories, protein, fat, sodium),
     )
     conn.commit()
@@ -187,11 +187,13 @@ if st.session_state.get('logged_in'):
                                 'Amount': total_df['Amount']})
     # Display the total nutrient amounts in a table
     calories_value = total_food_df.loc[total_food_df['Nutrient'] == 'Calories', 'Amount'].item()
-    st.write(f"Calories: {calories_value}")
+    Protein_value = total_food_df.loc[total_food_df['Nutrient'] == 'Protein', 'Amount'].item()
+    Fat_value = total_food_df.loc[total_food_df['Nutrient'] == 'Fat', 'Amount'].item()
+    Sodium_value = total_food_df.loc[total_food_df['Nutrient'] == 'Sodium', 'Amount'].item()
     st.table(total_food_df)
     
-    #if st.button("Save as Favorites"):
-      #favorites = (email,selected_food_type,selected_food_item,selected_toppings
+    if st.button("Save as Favorites"):
+      favorites = (email,selected_food_type,selected_food_item,selected_toppings,calories_value,Protein_value,Fat_value,Sodium_value)
 
     
 
