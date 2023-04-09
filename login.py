@@ -105,8 +105,8 @@ def create_custom_food_item(food_type, food_title, calories, protein, fat, sodiu
     conn = connect_to_snowflake()
     cursor = conn.cursor()
     cursor.execute(
-        "INSERT INTO CUSTOM_FOOD_ITEMS (EMAIL, TYPE, TITLE, CALORIES, PROTEIN, FAT, SODIUM) VALUES (%s, %s, %s, %s, %s, %s, %s)",
-        (st.session_state.email, food_type, food_title, calories, protein, fat, sodium),
+        "INSERT INTO CUSTOM_FOOD_ITEMS (EMAIL, TYPE, TITLE,topping, CALORIES, PROTEIN, FAT, SODIUM) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+        (st.session_state.email, food_type, food_title,topping, calories, protein, fat, sodium),
     )
     conn.commit()
     cursor.close()
@@ -188,6 +188,9 @@ if st.session_state.get('logged_in'):
     # Display the total nutrient amounts in a table
     #st.table(total_df['Amount'])
     st.table(total_food_df)
+    st.table(total_food_df['Calories')
+    #if st.button("Save as Favorites"):
+      #favorites = (email,selected_food_type,selected_food_item,selected_toppings
 
     
 
