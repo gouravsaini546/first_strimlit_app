@@ -162,15 +162,30 @@ if st.session_state.get('logged_in'):
     if len(get_toppings(selected_food_type)) > 0:
         selected_toppings = st.multiselect("Pick some toppings:", get_toppings(selected_food_type))
         if selected_toppings:
-          toppings_details = get_toppings_item_info(selected_toppings)
-          df2 = pd.DataFrame({'Nutrient': ['Calories', 'Protein', 'Fat', 'Sodium'],
-                           'Amount': toppings_details})
-          st.table(df2)
+            toppings_details = get_toppings_item_info(selected_toppings)
+            toppings_df = pd.DataFrame({'Nutrient': ['Calories', 'Protein', 'Fat', 'Sodium'],
+                                        'Amount': toppings_details})
+        else:
+            toppings_df = pd.DataFrame({'Nutrient': ['Calories', 'Protein', 'Fat', 'Sodium'],
+                                        'Amount': [0, 0, 0, 0]})
+    else:
+        toppings_df = pd.DataFrame({'Nutrient': ['Calories', 'Protein', 'Fat', 'Sodium'],
+                                    'Amount': [0, 0, 0, 0]})
+
     if selected_food_item:
         food_details = get_food_item_info(selected_food_item)
-        df = pd.DataFrame({'Nutrient': ['Calories', 'Protein', 'Fat', 'Sodium'],
-                           'Amount': food_details})
-        st.table(df)
+        food_df = pd.DataFrame({'Nutrient': ['Calories', 'Protein', 'Fat', 'Sodium'],
+                                'Amount': food_details})
+    else:
+        food_df = pd.DataFrame({'Nutrient': ['Calories', 'Protein', 'Fat', 'Sodium'],
+                                'Amount': [0, 0, 0, 0]})
+
+    # Sum the nutrient amounts from both dataframes
+    total_df = toppings_df.add(food_df, fill_value=0)
+
+    # Display the total nutrient amounts in a table
+    st.table(total_df)
+
     
 
       
