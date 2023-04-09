@@ -9,12 +9,12 @@ def connect_to_snowflake():
   conn = snowflake.connector.connect(**st.secrets[ "snowflake" ])
   return conn
 
-def create_new_user_profile(name, email, password, age, weight, height, activity_level):
+def create_new_user_profile(name, email, password,gender, age, weight, height, activity_level):
     # Hash the password using SHA-256 algorithm
   password_hash = hashlib.sha256(password.encode()).hexdigest()
   conn = connect_to_snowflake()
   cursor = conn.cursor()
-  cursor.execute("INSERT INTO user_profiles (name, email, password_hash, age, weight, height, activity_level) VALUES (%s, %s, %s, %s, %s, %s, %s)", (name, email, password_hash, age, weight, height, activity_level))
+  cursor.execute("INSERT INTO user_profiles (name, email, password_hash, gender, age, weight, height, activity_level) VALUES (%s,%s, %s, %s, %s, %s, %s, %s)", (name, email, password_hash,gender, age, weight, height, activity_level))
   conn.commit()
   cursor.close()
   conn.close()
@@ -36,7 +36,7 @@ def authenticate_user_login(email, password):
 def get_user_data(email):
     conn = connect_to_snowflake()
     cursor = conn.cursor()
-    cursor.execute("SELECT name, email, age, weight, height, activity_level, BMI FROM user_profiles WHERE email = %s", (email,))
+    cursor.execute("SELECT name, email,gender, age, weight, height, activity_level, BMI FROM user_profiles WHERE email = %s", (email,))
     result = cursor.fetchone()
     cursor.close()
     conn.close()
@@ -122,12 +122,13 @@ if page == 'Create Profile':
     name = st.text_input('Name')
     email = st.text_input('Email')
     password = st.text_input('Password', type='password')
+    gender = st.selectbox('Gender', options=['Male',  'Female', 'Others'])
     age = st.number_input('Age(In Years)', min_value=0, max_value=200)
     weight = st.number_input('Weight(In KG)', min_value=0, max_value=1000)
     height = st.number_input('Height(In CM)', min_value=0, max_value=500)
     activity_level = st.selectbox('Activity Level', options=['Sedentary',  'Moderately Active', 'Very Active'])
     if st.button('Create Profile'):
-        create_new_user_profile(name, email, password, age, weight, height, activity_level)
+        create_new_user_profile(name, email, password,gender, age, weight, height, activity_level)
         st.success('Profile created successfully!')
 
 elif page == 'Login':
@@ -148,14 +149,14 @@ if st.session_state.get('logged_in'):
 
     if st.button('View Profile Details'):
         with st.expander('User Profile'):
-            name, email, age, weight, height, bmi, activity_level = get_user_data(st.session_state.email)
+            name, email,gender, age, weight, height, bmi, activity_level = get_user_data(st.session_state.email)
             st.write(f"Name: {get_user_data(st.session_state.email)[0]}")
             st.write(f"Email: {get_user_data(st.session_state.email)[1]}")
-            st.write(f"Age: {get_user_data(st.session_state.email)[2]}")
-            st.write(f"Weight: {get_user_data(st.session_state.email)[3]}")
-            st.write(f"Height: {get_user_data(st.session_state.email)[4]}")
-            st.write(f"BMI: {get_user_data(st.session_state.email)[6]}")
-            st.write(f"Activity Level: {get_user_data(st.session_state.email)[5]}")
+            st.write(f"Age: {get_user_data(st.session_state.email)[3]}")
+            st.write(f"Weight: {get_user_data(st.session_state.email)[4]}")
+            st.write(f"Height: {get_user_data(st.session_state.email)[5]}")
+            st.write(f"BMI: {get_user_data(st.session_state.email)[7]}")
+            st.write(f"Activity Level: {get_user_data(st.session_state.email)[6]}")
     st.header('🍰🍛 Build Your Own Receipe 🍕🍗')
     selected_food_type = st.selectbox('Select a Food Type', get_food_items_by_type())
     selected_food_item = st.selectbox('Select a Food variant', get_food_items_by_title(selected_food_type))
