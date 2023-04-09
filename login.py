@@ -101,7 +101,7 @@ def get_toppings_item_info(toppings_calorie):
     conn.close()
     return result
 
-def favourite(food_type, food_title,topping, calories, protein, fat, sodium):
+def create_favourite(food_type, food_title,topping, calories, protein, fat, sodium):
     conn = connect_to_snowflake()
     cursor = conn.cursor()
     cursor.execute(
@@ -194,7 +194,7 @@ if st.session_state.get('logged_in'):
     st.table(total_food_df)
     
     if st.button("Save as Favorites"):
-      favorites = (selected_food_type,selected_food_item,selected_toppings,calories_value,Protein_value,Fat_value,Sodium_value)
+      create_favourite = (selected_food_type,selected_food_item,selected_toppings,calories_value,Protein_value,Fat_value,Sodium_value)
       st.success('favorites created')
     
 
