@@ -192,7 +192,7 @@ if st.session_state.get('logged_in'):
     st.table(total_food_df)
     email = get_user_data(st.session_state.email)[1]
     if st.button("Save as Favorites"):
-      create_favourite = (email,selected_food_type,selected_food_item,selected_toppings,calories_value,Protein_value,Fat_value,Sodium_value)
+      create_favourite(email,selected_food_type,selected_food_item,selected_toppings,calories_value,Protein_value,Fat_value,Sodium_value)
       st.success('favorites created')
     
 
