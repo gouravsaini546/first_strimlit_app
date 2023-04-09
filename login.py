@@ -160,6 +160,7 @@ if st.session_state.get('logged_in'):
     st.header('🍰🍛 Build Your Own Receipe 🍕🍗')
     selected_food_type = st.selectbox('Select a Food Type', get_food_items_by_type())
     selected_food_item = st.selectbox('Select a Food variant', get_food_items_by_title(selected_food_type))
+    selected_toppings = 'N/A'
     if len(get_toppings(selected_food_type)) > 0:
         selected_toppings = st.multiselect("Pick some toppings:", get_toppings(selected_food_type))
         if selected_toppings:
@@ -193,10 +194,7 @@ if st.session_state.get('logged_in'):
     st.table(total_food_df)
     
     if st.button("Save as Favorites"):
-      if selected_toppings:
-        favorites = (get_user_data(st.session_state.email)[1],selected_food_type,selected_food_item,selected_toppings,calories_value,Protein_value,Fat_value,Sodium_value)
-      else:
-        favorites = (get_user_data(st.session_state.email)[1],selected_food_type,selected_food_item,'N/A',calories_value,Protein_value,Fat_value,Sodium_value)
+      favorites = (get_user_data(st.session_state.email)[1],selected_food_type,selected_food_item,selected_toppings,calories_value,Protein_value,Fat_value,Sodium_value)
 
     
 
