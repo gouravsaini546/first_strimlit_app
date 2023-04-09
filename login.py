@@ -21,7 +21,7 @@ def create_new_user_profile(name, email, password,gender, age, weight, height, a
 def create_favourite(food_type, food_title,topping, calories, protein, fat, sodium):
   conn = connect_to_snowflake()
   cursor = conn.cursor()
-  cursor.execute("INSERT INTO favourite (email, type, title,topping, calories, protein, fat, sodium) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",(email, food_type, food_title,topping, calories, protein, fat, sodium))
+  cursor.execute("INSERT INTO favourite (email, type, title,topping, calories, protein, fat, sodium) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",(email,selected_food_type,selected_food_item,selected_toppings,calories_value,Protein_value,Fat_value,Sodium_value))
   conn.commit()
   cursor.close()
   conn.close()
@@ -190,9 +190,9 @@ if st.session_state.get('logged_in'):
     Fat_value = total_food_df.loc[total_food_df['Nutrient'] == 'Fat', 'Amount'].item()
     Sodium_value = total_food_df.loc[total_food_df['Nutrient'] == 'Sodium', 'Amount'].item()
     st.table(total_food_df)
-    
+    email = get_user_data(st.session_state.email)[1]
     if st.button("Save as Favorites"):
-      create_favourite = (get_user_data(st.session_state.email)[1],selected_food_type,selected_food_item,selected_toppings,calories_value,Protein_value,Fat_value,Sodium_value)
+      create_favourite = (email,selected_food_type,selected_food_item,selected_toppings,calories_value,Protein_value,Fat_value,Sodium_value)
       st.success('favorites created')
     
 
