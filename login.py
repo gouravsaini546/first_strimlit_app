@@ -2,6 +2,20 @@ import streamlit as st
 import snowflake.connector
 import hashlib
 import pandas as pd
+from streamlit import theming
+
+primary_color = "#7e57c2"
+
+# Set theme style
+theme = {
+    "primaryColor": primary_color,
+    "secondaryBackgroundColor": "#f9f9f9",
+    "textColor": "#333333",
+    "font": "sans serif",
+}
+
+# Apply the theme
+theming.set_theme(theme)
 
 st.set_page_config(page_title="Karigari", page_icon=":fork_and_knife:")
 
