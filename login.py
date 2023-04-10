@@ -254,7 +254,16 @@ if st.session_state.get('logged_in'):
     st.table(total_food_df)
     st.write(total_food_df.loc[total_food_df['Nutrient'] == 'Calories', 'Amount'].item())
     email = get_user_data(st.session_state.email)[1]
-    st.write(calculate_suggested_calories(get_user_data(st.session_state.email)[7],get_user_data(st.session_state.email)[6]))
+    
+    suggested_calories=calculate_suggested_calories(get_user_data(st.session_state.email)[7],get_user_data(st.session_state.email)[6])
+    if suggested_calories is not None:
+      if total_food_df['Nutrient'][0] <= suggested_calories:
+        st.write('This food is a good match for you based on your BMI and activity level.')
+      else:
+        st.write('This food may not be a good match for you based on your BMI and activity level.')
+    else:
+        st.write('No suggested calorie intake found for your BMI and activity level.')
+    
     if st.button("Save as Favorites"):
       create_favourite(email,selected_food_type,selected_food_item,selected_toppings,calories_value,Protein_value,Fat_value,Sodium_value)
       st.success('favorites created')
