@@ -107,8 +107,18 @@ def get_toppings_item_info(toppings_calorie):
     cursor.close()
     conn.close()
     return result
-
-
+def show_user_favourites(email):
+    rows = get_user_favourites(email)
+    if rows:
+      df = pd.DataFrame(rows, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
+      df = df[["Type", "Title", "Topping"]]
+      st.write(df)
+      st.button("Show details")
+      if st.button("Show details"):
+        df_details = pd.DataFrame(rows, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
+        st.write(df_details[["Calories", "Protein", "Fat", "Sodium"]])
+    else:
+            st.write("You have no favourites yet.")
     
 
 st.title('Karigari👨‍🍳')
@@ -156,20 +166,9 @@ if st.session_state.get('logged_in'):
             st.write(f"BMI: {get_user_data(st.session_state.email)[7]}")
             st.write(f"Activity Level: {get_user_data(st.session_state.email)[6]}")
     st.header('🍰🍛 Favourites 🍕🍗')
-    def show_user_favourites(email):
-        rows = get_user_favourites(email)
-        if rows:
-            df = pd.DataFrame(rows, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
-            df = df[["Type", "Title", "Topping"]]
-            st.write(df)
-            st.button("Show details")
-            if st.button("Show details"):
-                df_details = pd.DataFrame(rows, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
-                st.write(df_details[["Calories", "Protein", "Fat", "Sodium"]])
-        else:
-            st.write("You have no favourites yet.")
     
     show_user_favourites(get_user_data(st.session_state.email)[1])
+    
     st.header('🍰🍛 Build Your Own Receipe 🍕🍗')
     selected_food_type = st.selectbox('Select a Food Type', get_food_items_by_type())
     selected_food_item = st.selectbox('Select a Food variant', get_food_items_by_title(selected_food_type))
