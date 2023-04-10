@@ -257,7 +257,7 @@ if st.session_state.get('logged_in'):
     
     suggested_calories=calculate_suggested_calories(get_user_data(st.session_state.email)[7],get_user_data(st.session_state.email)[6])
     if suggested_calories is not None:
-      if total_food_df['Nutrient'][0] <= suggested_calories:
+      if total_food_df.loc[total_food_df['Nutrient'] == 'Calories', 'Amount'].item() <= suggested_calories:
         st.write('This food is a good match for you based on your BMI and activity level.')
       else:
         st.write('This food may not be a good match for you based on your BMI and activity level.')
