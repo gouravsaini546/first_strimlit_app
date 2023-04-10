@@ -107,14 +107,7 @@ def get_toppings_item_info(toppings_calorie):
     cursor.close()
     conn.close()
     return result
-def get_bmi(bmi_in=None):
-      conn = connect_to_snowflake()
-      cursor = conn.cursor()
-      cursor.execute(SELECT * FROM  BMI )
-      result = cursor.fetchone()
-      cursor.close()
-      conn.close()
-      return result
+
 def calculate_suggested_calories(bmi, activity_level):
     bmi_ranges = {
         'Underweight': '18.5',
