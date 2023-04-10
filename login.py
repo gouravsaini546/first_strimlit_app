@@ -259,7 +259,7 @@ if st.session_state.get('logged_in'):
       if total_food_df.loc[total_food_df['Nutrient'] == 'Calories', 'Amount'].item() <= suggested_calories:
         st.success('Recommended food based on BMI and activity level.')
       else:
-        st.write('Not a good match for your BMI and activity level.')
+        st.error('Not a good match for your BMI and activity level.')
     else:
         st.write('No suggested calorie intake found for your BMI and activity level.')
     
