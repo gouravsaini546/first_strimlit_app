@@ -108,22 +108,23 @@ def get_toppings_item_info(toppings_calorie):
     conn.close()
     return result
 def show_user_favourites(email):
-  rows = get_user_favourites(email)
-  if rows:
-    df = pd.DataFrame(rows, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
-    df = df[["Type", "Title", "Topping"]]
-    left_column, right_column = st.beta_columns([2, 1])
-    with left_column:
-      selected_item = st.radio("Select a favorite item", df["Title","Topping"].unique())
-      selected_row = df[df["Title"] == selected_item].iloc[0]
-      #st.dataframe(df)
-    with right_column:
-      if st.button("Show details"):
-        df_details = pd.DataFrame(rows, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
-        df_details = df_details[df_details["Title"] == selected_item]
-        st.dataframe(df_details[["Calories", "Protein", "Fat", "Sodium"]].style.set_properties(**{'width': '10cm', 'height': '2cm'}))
-  else:
-    st.write("You have no favourites yet.")
+    rows = get_user_favourites(email)
+    if rows:
+        df = pd.DataFrame(rows, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
+        df["Title"] = df.apply(lambda row: row["Title"] + "; " + row["Topping"], axis=1)
+        df = df[["Type", "Title"]]
+        left_column, right_column = st.beta_columns([2, 1])
+        with left_column:
+            selected_item = st.radio("Select a favorite item", df["Title"].unique())
+            selected_row = df[df["Title"] == selected_item].iloc[0]
+        with right_column:
+            if st.button("Show details"):
+                df_details = pd.DataFrame(rows, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
+                df_details = df_details[df_details["Title"] == selected_item]
+                st.dataframe(df_details[["Calories", "Protein", "Fat", "Sodium"]])
+    else:
+        st.write("You have no favourites yet.")
+
 
     
 
