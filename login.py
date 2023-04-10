@@ -159,7 +159,7 @@ if st.session_state.get('logged_in'):
     rows = get_user_favourites(get_user_data(st.session_state.email)[1])
     df3 = pd.DataFrame(favourites, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
     #df3 = pd.DataFrame({'favourites':rows ,
-                                        'Amount':["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"]})
+                                        #'Amount':["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"]})
     st.write(df3)
     #df3 = pd.DataFrame(rows, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
     # Hide nutritional information by default
