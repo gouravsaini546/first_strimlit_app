@@ -107,6 +107,50 @@ def get_toppings_item_info(toppings_calorie):
     cursor.close()
     conn.close()
     return result
+def get_bmi(bmi_in=None):
+      conn = connect_to_snowflake()
+      cursor = conn.cursor()
+      cursor.execute(SELECT * FROM  BMI )
+      result = cursor.fetchone()
+      cursor.close()
+      conn.close()
+      return result
+def calculate_suggested_calories(bmi, activity_level):
+    bmi_ranges = {
+        'Underweight': '18.5',
+        'Normal weight': '18.5-24.9',
+        'Overweight': '25.0-29.9',
+        'Obese class I': '30.0-34.9',
+        'Obese class II': '35.0-39.9',
+        'Obese class III': '40'
+    }
+
+    if bmi < 18.5:
+        bmi_range = bmi_ranges['Underweight']
+    elif bmi >= 18.5 and bmi <= 24.9:
+        bmi_range = bmi_ranges['Normal weight']
+    elif bmi >= 25.0 and bmi <= 29.9:
+        bmi_range = bmi_ranges['Overweight']
+    elif bmi >= 30.0 and bmi <= 34.9:
+        bmi_range = bmi_ranges['Obese class I']
+    elif bmi >= 35.0 and bmi <= 39.9:
+        bmi_range = bmi_ranges['Obese class II']
+    else:
+        bmi_range = bmi_ranges['Obese class III']
+
+    conn = connect_to_snowflake()
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT SUG_CALORIE_INTAKE FROM BMI WHERE BMI_RANGE = '{bmi_range}' AND ACTIVITY_LEVEL = '{activity_level}'")
+    result = cursor.fetchone()
+    cursor.close()
+    conn.close()
+
+    if result is not None:
+        suggested_calories = result[0]
+        return suggested_calories
+    else:
+        return None
+
 def show_user_favourites(email):
     rows = get_user_favourites(email)
     if rows:
@@ -217,6 +261,7 @@ if st.session_state.get('logged_in'):
     st.table(total_food_df)
     st.write(total_food_df.loc[total_food_df['Nutrient'] == 'Calories', 'Amount'].item())
     email = get_user_data(st.session_state.email)[1]
+    st.write(calculate_suggested_calories(get_user_data(st.session_state.email)[7],get_user_data(st.session_state.email)[6]))
     if st.button("Save as Favorites"):
       create_favourite(email,selected_food_type,selected_food_item,selected_toppings,calories_value,Protein_value,Fat_value,Sodium_value)
       st.success('favorites created')
