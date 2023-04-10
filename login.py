@@ -157,7 +157,7 @@ if st.session_state.get('logged_in'):
             st.write(f"Activity Level: {get_user_data(st.session_state.email)[6]}")
     st.header('🍰🍛 Favourites 🍕🍗')
     def show_user_favourites(email):
-        rows = get_user_favourite(email)
+        rows = get_user_favourites(email)
         if rows:
             df = pd.DataFrame(rows, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
             df = df[["Type", "Title", "Topping"]]
