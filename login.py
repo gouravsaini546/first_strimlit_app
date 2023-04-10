@@ -52,7 +52,7 @@ def get_user_data(email):
 def get_user_favourites(email):
     conn = connect_to_snowflake()
     cursor = conn.cursor()
-    cursor.execute("SELECT type, title, topping, calories, protein, fat, sodium FROM favourite WHERE email = %s limit 3", (email,))
+    cursor.execute("SELECT * FROM favourite WHERE email = %s limit 3", (email,))
     results = cursor.fetchall()
     cursor.close()
     conn.close()
