@@ -116,12 +116,12 @@ def show_user_favourites(email):
     with left_column:
       selected_item = st.radio("Select a favorite item", df["Title"].unique())
       selected_row = df[df["Title"] == selected_item].iloc[0]
-      st.dataframe(df)
+      #st.dataframe(df)
     with right_column:
       if st.button("Show details"):
         df_details = pd.DataFrame(rows, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
         df_details = df_details[df_details["Title"] == selected_item]
-        st.dataframe(df_details[["Calories", "Protein", "Fat", "Sodium"]])
+        st.dataframe(df_details[["Topping","Calories", "Protein", "Fat", "Sodium"]])
   else:
     st.write("You have no favourites yet.")
 
