@@ -56,7 +56,7 @@ def get_user_favourites(email):
     results = cursor.fetchall()
     cursor.close()
     conn.close()
-    return result
+    return results
 
 def add_user_favourite(email, recipe_name):
     conn = connect_to_snowflake()
