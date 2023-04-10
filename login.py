@@ -115,7 +115,7 @@ def show_user_favourites(email):
         df = df[["Type", "Title"]]
         left_column, right_column = st.beta_columns([2, 1])
         with left_column:
-            selected_item = st.radio("Select a favorite item", df["Title"].unique(), index=0,format_func=lambda x: f"<span style='font-size:12px'>{x}</span>",)
+            selected_item = st.radio("Select a favorite item", df["Title"].unique())
 
             selected_row = df[df["Title"] == selected_item].iloc[0]["Title"].split(";")[0]
             
