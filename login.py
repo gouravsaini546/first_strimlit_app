@@ -121,7 +121,7 @@ def show_user_favourites(email):
       if st.button("Show details"):
         df_details = pd.DataFrame(rows, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
         df_details = df_details[df_details["Title"] == selected_item]
-        st.dataframe(df_details[["Topping","Calories", "Protein", "Fat", "Sodium"]])
+        st.dataframe(df_details[["Topping","Calories", "Protein", "Fat", "Sodium"]].style.set_properties(**{'width': '10cm', 'height': '2cm'}))
   else:
     st.write("You have no favourites yet.")
 
