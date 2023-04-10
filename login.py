@@ -115,9 +115,10 @@ def show_user_favourites(email):
         df = df[["Type", "Title"]]
         left_column, right_column = st.beta_columns([2, 1])
         with left_column:
-            selected_item = st.radio("Select a favorite item", df["Title"].unique())
+            selected_item = st.radio("Select a favorite item", df["Title"].unique(), height=30)
+
             selected_row = df[df["Title"] == selected_item].iloc[0]["Title"].split(";")[0]
-            st.write(selected_row)
+            
         with right_column:
             if st.button("Show details"):
                 df_details = pd.DataFrame(rows, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
