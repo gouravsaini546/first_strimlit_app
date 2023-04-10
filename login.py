@@ -215,6 +215,7 @@ if st.session_state.get('logged_in'):
     Fat_value = total_food_df.loc[total_food_df['Nutrient'] == 'Fat', 'Amount'].item()
     Sodium_value = total_food_df.loc[total_food_df['Nutrient'] == 'Sodium', 'Amount'].item()
     st.table(total_food_df)
+    st.write(total_food_df.loc[total_food_df['Nutrient'] == 'Calories', 'Amount'].item())
     email = get_user_data(st.session_state.email)[1]
     if st.button("Save as Favorites"):
       create_favourite(email,selected_food_type,selected_food_item,selected_toppings,calories_value,Protein_value,Fat_value,Sodium_value)
