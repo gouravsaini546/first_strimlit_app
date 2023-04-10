@@ -252,15 +252,14 @@ if st.session_state.get('logged_in'):
     Fat_value = total_food_df.loc[total_food_df['Nutrient'] == 'Fat', 'Amount'].item()
     Sodium_value = total_food_df.loc[total_food_df['Nutrient'] == 'Sodium', 'Amount'].item()
     st.table(total_food_df)
-    st.write(total_food_df.loc[total_food_df['Nutrient'] == 'Calories', 'Amount'].item())
     email = get_user_data(st.session_state.email)[1]
     
     suggested_calories=calculate_suggested_calories(get_user_data(st.session_state.email)[7],get_user_data(st.session_state.email)[6])
     if suggested_calories is not None:
       if total_food_df.loc[total_food_df['Nutrient'] == 'Calories', 'Amount'].item() <= suggested_calories:
-        st.write('This food is a good match for you based on your BMI and activity level.')
+        st.write('Recommended food based on BMI and activity level.')
       else:
-        st.write('This food may not be a good match for you based on your BMI and activity level.')
+        st.write('Not a good match for your BMI and activity level.')
     else:
         st.write('No suggested calorie intake found for your BMI and activity level.')
     
