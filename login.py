@@ -116,7 +116,7 @@ def show_user_favourites(email):
         left_column, right_column = st.beta_columns([2, 1])
         with left_column:
             selected_item = st.radio("Select a favorite item", df["Title"].unique())
-            selected_row = df[df["Title"] == selected_item].iloc[0].str.split(";")[1].strip()
+            selected_row = df[df["Title"] == selected_item].iloc[0].str.split(";")[1].[0]
             st.write(selected_row)
         with right_column:
             if st.button("Show details"):
