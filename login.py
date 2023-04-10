@@ -113,8 +113,7 @@ def show_user_favourites(email):
       df = pd.DataFrame(rows, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
       df = df[["Type", "Title", "Topping"]]
       st.dataframe(df)
-      st.button("Show details")
-      if st.button("Show more details"):
+      if st.button("Show details"):
         df_details = pd.DataFrame(rows, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
         st.dataframe(df_details[["Calories", "Protein", "Fat", "Sodium"]])
     else:
