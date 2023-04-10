@@ -2,7 +2,7 @@ import streamlit as st
 import snowflake.connector
 import hashlib
 import pandas as pd
-from streamlit import theming
+#from streamlit import theming
 
 primary_color = "#7e57c2"
 
