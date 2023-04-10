@@ -156,18 +156,18 @@ if st.session_state.get('logged_in'):
             st.write(f"BMI: {get_user_data(st.session_state.email)[7]}")
             st.write(f"Activity Level: {get_user_data(st.session_state.email)[6]}")
     st.header('🍰🍛 Favourites 🍕🍗')
-    favourites = get_user_favourites(get_user_data(st.session_state.email)[1])
-    df3 = pd.DataFrame(favourites, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
-    #df3 = pd.DataFrame({'favourites':rows ,
-                                        #'Amount':["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"]})
-    st.write(df3)
-    #df3 = pd.DataFrame(rows, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
-    # Hide nutritional information by default
-    #df3 = df3[["Type", "Title", "Topping"]]
-    #st.write(df3)
-    #if st.button("Show Nutritional Information"):
-        #df = pd.DataFrame(rows, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
-        #st.write(df)
+    def show_user_favourites(email):
+        rows = get_user_favourite(email)
+        if rows:
+            df = pd.DataFrame(rows, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
+            df = df[["Type", "Title", "Topping"]]
+            st.write(df)
+            st.button("Show details")
+            if st.button("Show details"):
+                df_details = pd.DataFrame(rows, columns=["Type", "Title", "Topping", "Calories", "Protein", "Fat", "Sodium"])
+                st.write(df_details[["Calories", "Protein", "Fat", "Sodium"]])
+        else:
+            st.write("You have no favourites yet.")
     
     
     st.header('🍰🍛 Build Your Own Receipe 🍕🍗')
