@@ -169,7 +169,7 @@ if st.session_state.get('logged_in'):
         else:
             st.write("You have no favourites yet.")
     
-    
+    show_user_favourites(get_user_data(st.session_state.email)[1])
     st.header('🍰🍛 Build Your Own Receipe 🍕🍗')
     selected_food_type = st.selectbox('Select a Food Type', get_food_items_by_type())
     selected_food_item = st.selectbox('Select a Food variant', get_food_items_by_title(selected_food_type))
@@ -196,7 +196,7 @@ if st.session_state.get('logged_in'):
     else:
         food_df = pd.DataFrame({'Nutrient': ['Calories', 'Protein', 'Fat', 'Sodium'],
                                 'Amount': [0, 0, 0, 0]})
-
+    
     # Sum the nutrient amounts from both dataframes
     total_df = toppings_df.add(food_df, fill_value=0)
     total_food_df = pd.DataFrame({'Nutrient': ['Calories', 'Protein', 'Fat', 'Sodium'],
